@@ -1,4 +1,8 @@
-## Rowley connection 
+# DUC Mount Range fish functions
+# Add this to your own config.fish file from head with
+# ~> `cat fish/config.fish >> ~/.config/fish/config.fish`
+# For other computer suites, modify the aliases below:
+
 set ROWLEY_KEY 'rowley'
 set ROWLEY_HOME "/mnt/$ROWLEY_KEY"
 alias base-rowley="echo $ROWLEY_HOME"
