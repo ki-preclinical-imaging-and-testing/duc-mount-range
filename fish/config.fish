@@ -145,38 +145,22 @@ function duc-mount -d "Wrapper on standard duc command that points to nightly.db
   duc $argv[1] -d $NIGHTLYDUC_HOME/nightly.db $argv[2]  
 end
 
-function data_center -d "Tests and refreshes all mountpoints"
-  set MOUNTPTS $ROWLEY_HOME $JULIASERV_HOME $SONIC_HOME $PHOTON_HOME $POSITRON_HOME $MAGNETO_HOME $EMIT_HOME
-  echo
-  for _mp in $MOUNTPTS
-    is_mounted $_mp
-    if test "$status" = "0"
-      echo -e "\t [x]\t $_mp \t is mounted."
-    else
-      echo -e "\t [ ]\t $_mp \t NOT mounted! Remount manually."
-    end
-  end
-  echo
-end
 
-function data_center_df
-  set OSMOUNTPTS /mnt/juliaserver /mnt/sonic /mnt/photon /mnt/positron /mnt/magneto /mnt/emit
-  set DATAMOUNTPTS /mnt/rowley /mnt/data /mnt/sonic/D: /mnt/photon/X: /mnt/emit/Volumes/Backup\ HDD/ /mnt/emit/Volumes/CFTVolume1/ /mnt/emit/Volumes/CFTVolume2/
-  echo
-  df -h $OSMOUNTPTS --total | awk '{printf "%7s %7s %7s %7s    %-17s %29s\n", $5, $4, $3, $2, $6, $1}' | head -n 1
-  echo
-  echo "   OS Usage"
-  df -h $OSMOUNTPTS --total | awk '{printf "%7s %7s %7s %7s    %-17s %29s\n", $5, $4, $3, $2, $6, $1}' | head -n -1 | tail -n+2
-  echo
-  df -h $OSMOUNTPTS --total | awk '{printf "%7s %7s %7s %7s    %-17s %29s\n", $5, $4, $3, $2, $6, "Total OS"}' | tail -n 1
-  echo
-  echo "   Storage Usage"
-  df -h $DATAMOUNTPTS --total | awk '{printf "%7s %7s %7s %7s    %-17s %29s\n", $5, $4, $3, $2, $6, $1}' | head -n -1 | tail -n+2
-  echo
-  df -h $DATAMOUNTPTS --total | awk '{printf "%7s %7s %7s %7s    %-17s %29s\n", $5, $4, $3, $2, $6, "Total Storage"}' | tail -n 1
-  echo
-  echo "   Combined Usage"
-  df -h $OSMOUNTPTS $DATAMOUNTPTS --total | awk '{printf "%7s %7s %7s %7s    %-17s %29s\n", $5, $4, $3, $2, $6, "Total Combined"}' | tail -n 1
+function generate-ghost-reports -d "Generate reports on all workstation ghosts"
+  echo "Producing Sonic Ghost Report..."
+  julia $NIGHTLYDUC_HOME/julia/duc-ghosts.jl -b /mnt/sonic/C:/Users -p > "/home/patch/ghosts-sonic-$(date +%F).csv"
+  echo "Producing Photon Ghost Report..."
+  julia $NIGHTLYDUC_HOME/julia/duc-ghosts.jl -b /mnt/photon/C:/Users -p > "/home/patch/ghosts-photon-$(date +%F).csv"
+  echo "Producing Magneto Ghost Report..."
+  julia $NIGHTLYDUC_HOME/julia/duc-ghosts.jl -b /mnt/magneto/Users -p > "/home/patch/ghosts-magneto-$(date +%F).csv"
+  echo "Producing Positron Ghost Report..."
+  julia $NIGHTLYDUC_HOME/julia/duc-ghosts.jl -b /mnt/positron/Users -p > "/home/patch/ghosts-positron-$(date +%F).csv"
+  echo "Producing Rowley Ghost Report..."
+  julia $NIGHTLYDUC_HOME/julia/duc-ghosts.jl -b /mnt/rowley -p > "/home/patch/ghosts-rowley-$(date +%F).csv"
+  ssconvert --merge-to="/home/patch/Dropbox (MIT)/AIPT/Computation/ghost-report-$(date +%F).xlsx" /home/patch/ghosts*$(date +%F).csv
+  chown patch:patch "/home/patch/Dropbox (MIT)/AIPT/Computation/ghost-report-$(date +%F).xlsx" 
+  chown patch:patch /home/patch/ghosts*$(date +%F).csv
+  echo "Reports printed to Dropbox (MIT)/AIPT/Computation/ghost-report-$(date +%F).xlsx"
   echo
 end
 
