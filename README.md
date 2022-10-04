@@ -7,7 +7,7 @@ By mounting each of the machines on the local /mnt/ drive, this gives the
 administrator CLI tools that can quickly summarize storage on multiple
 machines and servers.  
 
-## Cronjon
+## Cronjob
 
 The current implementation runs nightly, and this is a
 
