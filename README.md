@@ -33,4 +33,7 @@ Then soft link to your /bin/ using the following:
 
 ## Additional instructions
 
+You can produce a shareable report of the ghosts using something like this
+
+  julia julia/duc-ghosts.jl -b /mnt/sonic/C:/Users -p > "/home/patch/sonic-ghosts-$(date +%F).csv"
 
