@@ -17,8 +17,8 @@ _ttmp=`date`
 echo 
 echo "  Mountpoint Status @ ${_ttmp}"
 echo "                      (Before Scan)"
-fish -c 'mount-in-range'
-fish -c 'data_center_df'
+fish -c 'mount-range'
+fish -c 'df-mount-range'
 echo
 echo 
 echo "  Nightly DUC index is starting... "
@@ -31,7 +31,7 @@ time duc index /mnt /home -vpH \
   --exclude=kcore \
   --exclude="Application Data" --exclude="AppData" \
   --exclude="Documents and Settings" --exclude "Local Settings" \
-  -d /home/patch/mnt-duc/nightly.db 
+  -d $ductmp 
 _t1=`date`
 echo
 echo "  End: ${_t1}" 
