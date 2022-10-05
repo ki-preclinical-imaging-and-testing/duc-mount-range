@@ -5,15 +5,14 @@ ductmp=$home/nightly.db
 logtmp=$home/nightly.log
 ducarc=$archive/`date +%F_%H-%M-%S`.db
 logarc=$archive/`date +%F_%H-%M-%S`.log
-
-echo $home
-echo $archive
-echo $ductmp
-echo $logtmp
-echo $ducarc
-echo $logarc
-exit
-
+echo
+echo "Home:         $home"
+echo "Archive:      $archive"
+echo "Nightly DB:   $ductmp"
+echo "Nightly Log:  $logtmp"
+echo "Archive DB:   $ducarc"
+echo "Arcrhive Log: $logarc"
+echo
 _ttmp=`date`
 echo 
 echo "  Mountpoint Status @ ${_ttmp}"
