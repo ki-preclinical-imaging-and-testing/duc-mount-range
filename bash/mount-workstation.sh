@@ -1,6 +1,6 @@
 #!/bin/bash
 home=$( dirname -- "$0" )
-idf=/home/patch/.ssh/ed3g-np 
+idf=/home/prod/.ssh/julia-prod 
 sai=15
 sacm=10
 if [ "$1" == "sonic" ]

@@ -2,13 +2,16 @@
 # Add this to your own config.fish file from head with
 # ~> `cat fish/config.fish >> ~/.config/fish/config.fish`
 # For other computer suites, modify the aliases below:
+#
+set CIFS_CRED '/home/prod/.cifs'
 
 set ROWLEY_KEY 'rowley'
 set ROWLEY_HOME "/mnt/$ROWLEY_KEY"
 alias base-rowley="echo $ROWLEY_HOME"
 alias base-cd-rowley="cd $ROWLEY_HOME; echo '> cd $ROWLEY_HOME'"
 alias base-ls-rowley="ls $ROWLEY_HOME"
-alias mount-rowley="mount -t cifs -o vers=3,credentials=/home/patch/.cifs/rowley-credentials.dat //rowley.mit.edu/atwai $ROWLEY_HOME"
+#alias mount-rowley="mount -t cifs -o vers=3,credentials=$CIFS_CRED/rowley-credentials.dat //rowley.mit.edu/atwai $ROWLEY_HOME"
+alias mount-rowley="/bin/mount-workstation rowley"
 alias mounted-rowley='is_mounted $ROWLEY_HOME'
 alias unmount-rowley="umount $ROWLEY_HOME"
 set MOUNTIN_KEYS $ROWLEY_KEY
@@ -115,29 +118,7 @@ function unmount-range -d "Unmount all of the workstations"
 end
 
 function mount-range -d "Tests and refreshes all workstation and server mountpoints"
-  echo
-  for _k in $MOUNTIN_KEYS
-    set _mp /mnt/$_k
-    if test -d $_mp 
-      is_mounted $_mp 
-      if test "$status" = "0"
-        echo -e "\t [x]\t $_mp \t is mounted."
-      else
-        for _i in 1 2 3
-          /bin/mount-workstation $_k
-          is_mounted $_mp 
-          if test "$status" = "0"
-            echo -e "\t [x]\t $_mp \t is mounted."
-            break
-          end
-          if [ "$_i" = "3" ]
-            echo -e "\t [ ]\t $_mp \t NOT mounted! Remount manually."
-          end
-        end 
-      end
-    end
-  end
-  echo
+  /bin/mount-range
 end
 
 set NIGHTLYDUC_HOME /home/patch/duc-mount-range
