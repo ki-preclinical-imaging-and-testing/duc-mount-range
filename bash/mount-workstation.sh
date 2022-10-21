@@ -1,6 +1,8 @@
 #!/bin/bash
 home=$( dirname -- "$0" )
-idf=/home/prod/.ssh/julia-prod 
+dssh=/home/prod/.ssh
+dcifs=/home/patch/.cifs
+idf=$dssh/julia-prod 
 sai=15
 sacm=10
 if [ "$1" == "sonic" ]
@@ -8,14 +10,14 @@ then
   echo "... mounting $1"
   sshfs \
     -o password_stdin,reconnect,ServerAliveInterval=$sai,ServerAliveCountMax=$sacm \
-    patch@ki-sonic.mit.edu:/ /mnt/sonic <<< `cat $home/sonic.pass`
+    patch@ki-sonic.mit.edu:/ /mnt/sonic <<< `cat $dssh/sonic.pass`
 
 elif [ "$1" == "photon" ]
 then
   echo "... mounting $1"
   sshfs \
     -o password_stdin,reconnect,ServerAliveInterval=$sai,ServerAliveCountMax=$sacm \
-    patch@ki-photon.mit.edu:/ /mnt/photon <<< `cat $home/photon.pass`
+    patch@ki-photon.mit.edu:/ /mnt/photon <<< `cat $dssh/photon.pass`
 
 elif [ "$1" == "magneto" ]
 then
@@ -47,7 +49,7 @@ elif [ "$1" == "rowley" ]
 then
   echo "... mounting $1"
   mount -t cifs \
-    -o vers=3,credentials=/home/patch/.cifs/rowley-credentials.dat \
+    -o vers=3,credentials=$dcifs/rowley-credentials.dat \
     //rowley.mit.edu/atwai /mnt/rowley
 
 else
