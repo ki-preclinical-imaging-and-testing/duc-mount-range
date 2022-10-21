@@ -7,6 +7,12 @@ By mounting each of the machines on the local /mnt/ drive, this gives the
 administrator CLI tools that can quickly summarize storage on multiple
 machines and servers.  
 
+It makes the most sense to run these as root, but it doesn't make sense to use
+git as root, so the current installation procedure involves cloning to the
+`prod` account and then installing so that these can be used as root while
+nightly runs are stored in `/home/prod/duc-mount-range/`. Perhaps someone can
+chime in with a better way to do this in the future.
+
 ## Cronjob
 
 The current implementation runs nightly, and this is a
@@ -17,8 +23,10 @@ The current implementation runs nightly, and this is a
 ## Fish Shell
 
 Add the following blocks of code to your ~/.config/fish/config.fish
+Copy fish/duc-mount-range.fish to your root fish conf directory at /root/.config/fish/conf.d/. 
 
-  TODO: Add the script here!
+TODO: This could be automated!
+
 
 ## Shell Scripts
 
