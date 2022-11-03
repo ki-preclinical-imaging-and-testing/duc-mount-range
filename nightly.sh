@@ -31,6 +31,7 @@ time duc index /mnt /home -vpH \
   --exclude=kcore \
   --exclude="Application Data" --exclude="AppData" \
   --exclude="Documents and Settings" --exclude "Local Settings" \
+  --exclude="System/Volumes/Data" \
   -d $ductmp 
 _t1=`date`
 echo
@@ -45,7 +46,7 @@ echo
 _ttmp=`date`
 echo "  Mountpoint Status @ ${_ttmp}"
 echo "                      (After Scan)"
-fish -c 'data_center'
-fish -c 'data_center_df'
+fish -c 'mount-range'
+fish -c 'df-mount-range'
 echo
 echo "  Done."

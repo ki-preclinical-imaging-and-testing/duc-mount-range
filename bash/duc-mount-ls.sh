@@ -17,12 +17,14 @@ else
       if [ ! -z "$2" ] && [ "$2" == 'csv' ]
       then
         modat=`stat -c %y $dir | cut -d ' ' -f1`
-        dirsize=`duc ls -bD $dir -d $nightlydb | awk '{print $1}'`
+        #dirsize=`duc ls -bD $dir -d $nightlydb | awk '{print $1}'`
+        dirsize=`duc ls -b --dirs-only $dir -d $nightlydb | awk '{print $1}'`
         username=`echo $dir | rev | cut -d '/' -f1 | rev`
         printf "%s,%s,%s,%s\n" "$modat" "$dirsize" "$dir" "$username"
       else
         modat=`stat -c %y $dir | cut -d '.' -f1`
-        dirsize=`duc ls -D $dir -d $nightlydb | awk '{print $1}'`
+        #dirsize=`duc ls -D $dir -d $nightlydb | awk '{print $1}'`
+        dirsize=`duc ls --dirs-only $dir -d $nightlydb | awk '{print $1}'`
         printf "%20s %9s %s \n" "$modat" "$dirsize" "$dir"
       fi
     fi
