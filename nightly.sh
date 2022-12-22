@@ -19,6 +19,11 @@ echo "  Mountpoint Status @ ${_ttmp}"
 echo "                      (Before Scan)"
 fish -c 'mount-range'
 fish -c 'df-mount-range'
+echo "  Refreshing mountpoints..."
+fish -c 'unmount-range'
+fish -c 'mount-range'
+fish -c 'df-mount-range'
+echo "  ... mountpoints refreshed."
 echo
 echo 
 echo "  Nightly DUC index is starting... "
