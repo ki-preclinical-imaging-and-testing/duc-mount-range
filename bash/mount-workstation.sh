@@ -1,8 +1,8 @@
 #!/bin/bash
 home=$( dirname -- "$0" )
-dssh=/home/prod/.ssh
+dssh=/home/patch/.ssh
 dcifs=/home/patch/.cifs
-idf=$dssh/julia-prod 
+idf=$dssh/ed3g-np 
 sai=15
 sacm=10
 if [ "$1" == "sonic" ]

@@ -3,7 +3,7 @@
 # ~> `cat fish/config.fish >> ~/.config/fish/config.fish`
 # For other computer suites, modify the aliases below:
 #
-set CIFS_CRED '/home/prod/.cifs'
+set CIFS_CRED '/home/dev/.cifs'
 
 set ROWLEY_KEY 'rowley'
 set ROWLEY_HOME "/mnt/$ROWLEY_KEY"
@@ -121,9 +121,21 @@ function mount-range -d "Tests and refreshes all workstation and server mountpoi
   /bin/mount-range
 end
 
-set NIGHTLYDUC_HOME /home/patch/duc-mount-range
+set NIGHTLYDUC_HOME /home/dev/duc-mount-range
 function duc-mount -d "Wrapper on standard duc command that points to nightly.db"
   duc $argv[1] -d $NIGHTLYDUC_HOME/nightly.db $argv[2]  
+end
+
+set GHOST_REPORT_EXE $NIGHTLYDUC_HOME/python/ghost-report.py
+set GHOST_REPORT_DIR $NIGHTLYDUC_HOME/ghost-reports
+set DROPBOX_HOME '/home/patch/Dropbox (MIT)'
+set GHOST_REPORT_DROP '$DROPBOX_HOME/AIPT/Computation/Disk-Usage'
+function ghost-report -d "Generate reports on all workstation ghosts"
+  python $GHOST_REPORT_EXE 
+  echo "Reports archived at $GHOST_REPORT_DIR"
+  rsync -auv "$GHOST_REPORT_DIR" "$GHOST_REPORT_DROP"
+  chown -R patch:patch "$GHOST_REPORT_DROP" 
+  echo "Reports dropped at $GHOST_REPORT_DROP"
 end
 
 
